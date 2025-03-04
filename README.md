@@ -1,72 +1,109 @@
 # Lila Boutique Demo
 
-An embedded app starter template to get up and ready with Shopify app development with Next.js and Prisma.
+Un modèle de démarrage d'application embarquée pour démarrer rapidement avec le développement d'applications Shopify avec Next.js et Prisma.
 
-I've included [notes](/docs/NOTES.md) on this repo which goes over the repo on why certain choices were made.
+J'ai inclus des [notes](/docs/NOTES.md) dans ce dépôt qui expliquent pourquoi certaines décisions ont été prises.
 
 ## Technologies
 
-- Package manager: yarn (preferred), npm (acceptable, just replace `yarn` by `npm run` in the instructions).
-- Tunnel (pour connecter l'app locale avec Shopify): [Ngrok](https://ngrok.com/downloads/).
-- Database: PostgreSQL.
+- NodeJS v20+
+- Gestionnaire de paquets : yarn (préféré), npm (acceptable, il suffit de remplacer `yarn` par `npm run` dans les instructions).
+- Tunnel (pour connecter l'application locale avec Shopify) : [Ngrok](https://ngrok.com/downloads/).
+- Base de données : PostgreSQL.
 
-## How to install
+## Comment installer
 
-- Install required tools globally, like the Shopify CLI
+- Installer les outils requis globalement, comme le Shopify CLI :
 
 ```bash
 yarn g:install
 ```
 
-- Install dependencies
+- Installer les dépendances :
 
 ```bash
 yarn install
 ```
 
-- Install PostgreSQL in your system, e.g. in MacOS ` brew install postgresql@14`. Check out [here](https://www.postgresql.org/download/macosx/) for more details.
-  Make sure to create the database with `yarn pg:create` and start the services, e.g. `brew services start postgresql`.
-- Build your Prisma (ORM) client, based on your Prisma scammer: `yarn prepare` and push the prisma schema with `yarn prisma:push`
+- Installer PostgreSQL sur votre système, par exemple sous MacOS `brew install postgresql@14`. Consultez [ici](https://www.postgresql.org/download/macosx/) pour plus de détails.
+  Assurez-vous de créer la base de données avec `yarn pg:create` et de démarrer les services, par exemple : `brew services start postgresql`.
 
-- After installing ngrok, you can signup/login and config your CLI with your current auth token
-
+- Générer le client Prisma (ORM) en fonction de votre schéma Prisma :
+  
 ```bash
- ngrok config add-authtoken $NGROK_AUTHTOKEN
+yarn prepare
+```
+  
+  Puis poussez le schéma Prisma avec :
+  
+```bash
+yarn prisma:push
 ```
 
-and execute ngrok with `yarn ngrok` which basically executes `ngrok http 3000` and add your ngrok-free.app URL into the env variable `SHOPIFY_APP_URL`
-
-- Update the config with `yarn update:config`
-
-## How to start the demo
-
-- Build the project with `yarn build`
-
-- Start the project with `yarn start` or `yarn dev` while coding
-
-- Install the app by opening in your browser the following url `https://<storename>.myshopify.com/admin/oauth/install?client_id=<SHOPIFY_API_KEY>`:
+- Après avoir installé ngrok, vous pouvez vous inscrire/se connecter et configurer votre CLI avec votre jeton d'authentification actuel :
 
 ```bash
-source .env;open https://$APP_HANDLE.myshopify.com/admin/oauth/install?client_id=$SHOPIFY_API_KEY
+ngrok config add-authtoken $NGROK_AUTHTOKEN
 ```
 
-After installing this app you are ready to go
+Puis exécutez ngrok avec `yarn ngrok`, ce qui exécute essentiellement `ngrok http 3000` et ajoutez votre URL ngrok-free.app à la variable d'environnement `SHOPIFY_APP_URL`.
 
-## How to show orders in the system
+- Mettre à jour la configuration avec :
 
-1 - Firstly, create an order in the backend of the app: In the menu "Orders", select "New Order", there you select a product and some existing "Customer"; also you can create custom ones.
+```bash
+yarn update:config
+```
 
-> Note: the easiest way to add orders is to use the submenu "Drafts", where some orders are premade. You just need to select them and mark it as paid.
+## Comment démarrer la démo
 
-2 - Go to the app flow "Lila Boutique demo" and select the "Les ventes" > "Ordres d'achats".
+- Compiler le projet avec :
 
-3 - In the list of orders you will see the orders that are already imported. There is a webhook that is triggered after an order was created (like in the step 1). You can also "Update" manually these entries, which will import them from Shopify into your database.
+```bash
+yarn build
+```
+
+- Démarrer le projet avec :
+
+```bash
+yarn start
+```
+
+ou en mode développement :
+
+```bash
+yarn dev
+```
+
+- Installer l'application en ouvrant dans votre navigateur l'URL suivante :
+
+```bash
+https://<storename>.myshopify.com/admin/oauth/install?client_id=<SHOPIFY_API_KEY>
+```
+
+Ou via la ligne de commande :
+
+```bash
+source .env; open https://$APP_HANDLE.myshopify.com/admin/oauth/install?client_id=$SHOPIFY_API_KEY
+```
+
+Après avoir installé cette application, vous êtes prêt à l'utiliser.
+
+## Comment afficher les achats dans le système
+
+1 - Créez une achat dans le backend de l'application : Dans le menu "Orders", sélectionnez "New Order". Là, choisissez un produit et un "Customer" existant ou créez-en un personnalisé.
+
+> Remarque : Le moyen le plus simple d'ajouter des achats est d'utiliser le sous-menu "Drafts", où les données sont pré-remplies. Il suffit de les sélectionner et de les marquer comme payées.
+
+2 - Allez dans le flux d'application "Lila Boutique Demo" et sélectionnez "Les ventes" > "Ordres d'achats".
+
+3 - Dans la liste d'achats (`/orders/list`), vous verrez celles déjà importées. Un webhook est déclenché après la création d'une commande (comme à l'étape 1). Vous pouvez également "Mettre à jour" ces entrées manuellement, ce qui les importera de Shopify vers votre base de données.
 
 ## Notes
 
-- Refer to [SETUP](/docs/SETUP.md)
-- The project comes with snippets to speed up development. Refer to [Snippets](/docs/SNIPPETS.md).
-- App Bridge CDN migration guide is available [here](/docs/migration/app-bridge-cdn.md)
-- Shopify Managed Installation migration guide is available [here](/docs/migration/oauth-to-managed-installation.md)
-- Client Provider abstraction update guide is available [here](/docs/migration/clientProvider.md)
-- GraphQL to Managed Webhooks migration guide is available [here](/docs/migration/managed-webhooks.md)
+- Référez-vous à [SETUP](/docs/SETUP.md).
+- Le projet inclut des snippets pour accélérer le développement. Voir [Snippets](/docs/SNIPPETS.md).
+- Guide de migration App Bridge CDN disponible [ici](/docs/migration/app-bridge-cdn.md).
+- Guide de migration de l'installation gérée par Shopify disponible [ici](/docs/migration/oauth-to-managed-installation.md).
+- Guide de mise à jour de l'abstraction Client Provider disponible [ici](/docs/migration/clientProvider.md).
+- Guide de migration de GraphQL vers les webhooks gérés disponible [ici](/docs/migration/managed-webhooks.md).
+
