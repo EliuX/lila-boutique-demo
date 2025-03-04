@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "checkJs": true,
+    "noEmit": false,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./*"],
+      "@/utils": ["./utils/*"],
+      "@/components": ["./components/*"],
+      "@/hooks": ["./components/hooks/*"]
+    }
+  }
+}

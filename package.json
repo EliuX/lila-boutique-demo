@@ -1,0 +1,63 @@
+{
+  "name": "lila-boutique-demo",
+  "version": "2025.01.26",
+  "type": "module",
+  "author": {
+    "name": "Harshdeep Singh Hura",
+    "url": "https://harshdeephura.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kinngh/lila-boutique-demo.git"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "pretty": "prettier --write ./",
+    "update": "ncu -u",
+    "-----> Tunnel <-----": "",
+    "ngrok:auth": "ngrok authtoken $NGROK_AUTHTOKEN",
+    "ngrok": "ngrok http 3000",
+    "cloudflare": "cloudflared tunnel --url localhost:3000",
+    "-----> Shopify <-----": "",
+    "g:install": "npm i -g @shopify/cli@latest",
+    "shopify": "shopify",
+    "update:config": "node _developer/tomlWriter.js; npm run pretty; shopify app deploy;",
+    "update:url": "node _developer/updateDashboard.js",
+    "-----> Database <-----": "",
+    "pg:install": "brew install postgresql@14",
+    "pg:create": "mkdir database; initdb ./database",
+    "pg:start": "brew services start postgresql",
+    "pg:stop": "pbrew services stop postgresql",
+    "db:create": "mkdir database; mysqld --initialize-insecure --datadir=./database",
+    "db:start": "mysqld --datadir=./database",
+    "db:stop": "mysqladmin shutdown",
+    "-----> Prisma <-----": "",
+    "prisma": "npx prisma",
+    "prisma:push": "npx prisma db push",
+    "prisma:pull": "npx prisma db pull",
+    "-----> Migrations <-----": "",
+    "migrate": "prisma migrate dev",
+    "prepare": "npx prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "@shopify/polaris": "^13.9.3",
+    "@shopify/shopify-api": "^11.9.0",
+    "cryptr": "^6.3.0",
+    "next": "15.2.1",
+    "next-api-middleware": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@iarna/toml": "^2.2.5",
+    "@shopify/cli-kit": "^3.76.0",
+    "dotenv": "^16.4.7",
+    "ngrok": "^5.0.0-beta.2",
+    "npm-check-updates": "^17.1.15",
+    "prettier": "^3.5.3",
+    "prisma": "^6.4.1"
+  }
+}

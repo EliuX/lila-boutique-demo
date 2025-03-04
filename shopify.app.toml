@@ -1,0 +1,39 @@
+# Avoid writing to toml directly. Use your .env file instead
+
+name = "Lila Boutique demo"
+handle = "lila-boutique-demo"
+client_id = "a35a5c3baa03afd45d62a925e09475aa"
+application_url = "https://b026-2607-fa49-d73c-4100-00-661c.ngrok-free.app"
+embedded = true
+extension_directories = [ "../extension/extensions/**" ]
+
+[auth]
+redirect_urls = [
+  "https://b026-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/"
+]
+
+[access_scopes]
+scopes = "read_products,read_content,write_content,read_themes,write_themes,read_script_tags,write_script_tags,read_orders,write_orders,read_customers,write_customers,read_draft_orders,write_draft_orders,read_inventory,write_inventory,read_locations,read_price_rules,write_price_rules,read_discounts,write_discounts,read_reports,write_reports,read_marketing_events,write_marketing_events,read_checkouts"
+use_legacy_install_flow = false
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "https://b026-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/webhooks/app_uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "orders/create" ]
+  uri = "https://b026-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/webhooks/orders_create"
+
+  [webhooks.privacy_compliance]
+  customer_data_request_url = "https://b026-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/gdpr/customers_data_request"
+  customer_deletion_url = "https://b026-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/gdpr/customers_redact"
+  shop_deletion_url = "https://b026-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/gdpr/shop_redact"
+
+[pos]
+embedded = false
+
+[build]
+include_config_on_deploy = true

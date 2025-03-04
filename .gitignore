@@ -1,0 +1,5 @@
+.env
+.shopify
+.next/
+node_modules/
+database/
