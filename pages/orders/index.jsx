@@ -9,7 +9,9 @@ import {
   IndexTable,
   InlineStack,
   Button,
-  Spinner,
+  SkeletonPage,
+  SkeletonDisplayText,
+  SkeletonBodyText,
 } from "@shopify/polaris";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -45,6 +47,27 @@ const OrdersPage = () => {
       .finally(() => setLoading(false));
   };
 
+  if (isLoading) {
+    return (
+      <SkeletonPage title="En téléchargeant..." primaryAction>
+        <Layout>
+          <Layout.Section>
+            <Card>
+              <Layout.Section>
+                <SkeletonDisplayText maxWidth="60%" />
+              </Layout.Section>
+              <Layout.Section variant="oneHalf">
+                <BlockStack>
+                  <SkeletonBodyText lines={5} />
+                </BlockStack>
+              </Layout.Section>
+            </Card>
+          </Layout.Section>
+        </Layout>
+      </SkeletonPage>
+    );
+  }
+
   const rowMarkup = orders.map(
     ({ id, orderNumber, customer, totalPrice }, index) => (
       <IndexTable.Row id={id} key={id} position={index}>
@@ -60,7 +83,7 @@ const OrdersPage = () => {
           </Text>
         </IndexTable.Cell>
       </IndexTable.Row>
-    ),
+    )
   );
 
   return (
@@ -68,39 +91,36 @@ const OrdersPage = () => {
       <Page
         title="Les ordres"
         subtitle="Montrer les ordres d'achats dans notre base de données"
-        backAction={{ onAction: () => router.push("/orders") }}
+        backAction={{ onAction: () => router.push("/") }}
+        primaryAction={{
+          content: "Import",
+          onAction: updateOrders,
+        }}
       >
         <Layout>
           <Layout.Section>
             <Card>
               <BlockStack gap="200">
-                <Text as="p" variant="headingMd">
+                <Text as="p" variant="p">
                   The following orders has been imported from Shopify using
                   webhooks or updated manually.
                 </Text>
-                <InlineStack wrap={false} align="end">
-                  {isLoading ? (
-                    <Spinner accessibilityLabel="Loading" size="small" />
+                <BlockStack gap="200">
+                  {orders.length > 0 ? (
+                    <IndexTable
+                      itemCount={orders.length}
+                      headings={[
+                        { title: "Order Number" },
+                        { title: "Customer" },
+                        { title: "Total Price", alignment: "end" },
+                      ]}
+                    >
+                      {rowMarkup}
+                    </IndexTable>
                   ) : (
-                    <Button variant="primary" onClick={updateOrders}>
-                      Update
-                    </Button>
+                    <Text as="p">There are no orders.</Text>
                   )}
-                </InlineStack>
-                {orders.length > 0 ? (
-                  <IndexTable
-                    itemCount={orders.length}
-                    headings={[
-                      { title: "Order Number" },
-                      { title: "Customer" },
-                      { title: "Total Price" },
-                    ]}
-                  >
-                    {rowMarkup}
-                  </IndexTable>
-                ) : (
-                  <Text as="p">There are no orders.</Text>
-                )}
+                </BlockStack>
               </BlockStack>
             </Card>
           </Layout.Section>

@@ -27,6 +27,28 @@ const HomePage = () => {
     <>
       <Page title="Home">
         <Layout>
+          <Layout.Section variant="fullWidth">
+            <Card>
+              <BlockStack gap="200">
+                <Text as="h2" variant="headingMd">
+                  Les ordres d'achats
+                </Text>
+                <Text as="p">
+                  Montrer les ordres d'achats dans notre base de données
+                </Text>
+                <InlineStack wrap={false} align="end">
+                  <Button
+                    variant="primary"
+                    onClick={async () => {
+                      router.push("/orders");
+                    }}
+                  >
+                    Montrer
+                  </Button>
+                </InlineStack>
+              </BlockStack>
+            </Card>
+          </Layout.Section>
           {isDev ? (
             <>
               <Layout.Section variant="oneHalf">
@@ -124,7 +146,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://shopify.dev/docs/api/app-bridge-library/reference",
-                        "_blank",
+                        "_blank"
                       );
                     }}
                   >
@@ -151,7 +173,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://github.com/kinngh/lila-boutique-demo/issues?q=is%3Aissue",
-                        "_blank",
+                        "_blank"
                       );
                     }}
                   >
@@ -164,7 +186,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://github.com/kinngh/lila-boutique-demo",
-                        "_blank",
+                        "_blank"
                       );
                     }}
                   >
@@ -192,7 +214,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://kinngh.gumroad.com/l/how-to-make-shopify-apps?utm_source=boilerplate&utm_medium=nextjs",
-                        "_blank",
+                        "_blank"
                       );
                     }}
                   >
@@ -221,7 +243,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://kinngh.gumroad.com/l/how-to-make-shopify-apps?utm_source=boilerplate&utm_medium=nextjs",
-                        "_blank",
+                        "_blank"
                       );
                     }}
                   >
@@ -232,28 +254,6 @@ const HomePage = () => {
             </Card>
           </Layout.Section>
           <Layout.Section variant="oneHalf" />
-          <Layout.Section variant="oneHalf">
-            <Card>
-              <BlockStack gap="200">
-                <Text as="h2" variant="headingMd">
-                  Les ordres d'achats
-                </Text>
-                <Text as="p">
-                  Montrer les ordres d'achats dans notre base de données
-                </Text>
-                <InlineStack wrap={false} align="end">
-                  <Button
-                    variant="primary"
-                    onClick={async () => {
-                      router.push("/orders");
-                    }}
-                  >
-                    Montrer
-                  </Button>
-                </InlineStack>
-              </BlockStack>
-            </Card>
-          </Layout.Section>
         </Layout>
       </Page>
     </>
