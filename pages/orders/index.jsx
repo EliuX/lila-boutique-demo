@@ -12,6 +12,8 @@ import {
   SkeletonPage,
   SkeletonDisplayText,
   SkeletonBodyText,
+  Toast,
+  Frame,
 } from "@shopify/polaris";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -19,6 +21,7 @@ import { useRouter } from "next/router";
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [infoMessage, setMessage] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,7 +40,14 @@ const OrdersPage = () => {
     return fetch(`/api/orders/update?afterDate=${createdAt}`, {
       method: "POST",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 409) {
+          setMessage("Il n'y a pas de nouveaux achats.");
+          return [];
+        } else {
+          return response.json();
+        }
+      })
       .then((data) => {
         if (data.length) {
           setOrders([...data, ...orders]);
@@ -87,7 +97,7 @@ const OrdersPage = () => {
   );
 
   return (
-    <>
+    <Frame>
       <Page
         title="Les ordres"
         subtitle="Montrer les ordres d'achats dans notre base de données"
@@ -98,6 +108,9 @@ const OrdersPage = () => {
         }}
       >
         <Layout>
+          {infoMessage && (
+            <Toast content={infoMessage} onDismiss={() => setMessage(null)} />
+          )}
           <Layout.Section>
             <Card>
               <BlockStack gap="200">
@@ -118,7 +131,7 @@ const OrdersPage = () => {
                       {rowMarkup}
                     </IndexTable>
                   ) : (
-                    <Text as="p">There are no orders.</Text>
+                    <Text as="p">Il n'y a pas d'achats</Text>
                   )}
                 </BlockStack>
               </BlockStack>
@@ -126,7 +139,7 @@ const OrdersPage = () => {
           </Layout.Section>
         </Layout>
       </Page>
-    </>
+    </Frame>
   );
 };
 

@@ -10,7 +10,7 @@ export function convertShopifyOrder(shopifyOrder) {
     totalPrice: parseFloat(
       shopifyOrder.total_price || shopifyOrder.totalPriceSet.shopMoney.amount,
     ),
-    createdAt: new Date(shopifyOrder.created_at || shopifyOrder.createdAt),
+    createdAt: new Date(shopifyOrder.createdAt || shopifyOrder.created_at),
     updatedAt: new Date(shopifyOrder.updatedAt || shopifyOrder.updated_at),
   };
 }
@@ -20,6 +20,8 @@ export async function createOrder({
   orderNumber,
   customer,
   totalPrice,
+  createdAt,
+  updatedAt,
 }) {
   return prisma.orders.create({
     data: {
@@ -27,6 +29,8 @@ export async function createOrder({
       orderNumber,
       customer,
       totalPrice,
+      createdAt,
+      updatedAt,
     },
   });
 }
