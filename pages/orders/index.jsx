@@ -1,99 +1,106 @@
+"use client";
+
 import {
-  Button,
-  Card,
-  InlineStack,
-  Layout,
   Page,
-  Text,
+  Card,
   BlockStack,
+  Text,
+  Layout,
+  IndexTable,
+  InlineStack,
+  Button,
+  Spinner,
 } from "@shopify/polaris";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-const DebugIndex = () => {
+const OrdersPage = () => {
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("/api/orders")
+      .then((response) => response.json())
+      .then((data) => setOrders(data))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const updateOrders = async () => {
+    setLoading(true);
+    const [{ createdAt }] = orders;
+
+    return fetch(`/api/orders/update?afterDate=${createdAt}`, {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length) {
+          setOrders([...data, ...orders]);
+        }
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  };
+
+  const rowMarkup = orders.map(
+    ({ id, orderNumber, customer, totalPrice }, index) => (
+      <IndexTable.Row id={id} key={id} position={index}>
+        <IndexTable.Cell>
+          <Text variant="bodyMd" fontWeight="bold" as="span">
+            {orderNumber}
+          </Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>{customer || "?"}</IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text as="span" alignment="end" numeric>
+            {totalPrice}
+          </Text>
+        </IndexTable.Cell>
+      </IndexTable.Row>
+    ),
+  );
 
   return (
     <>
       <Page
-        title="Les ventes"
-        subtitle="Des actions liées aux ventes"
-        backAction={{ onAction: () => router.push("/") }}
+        title="Les ordres"
+        subtitle="Montrer les ordres d'achats dans notre base de données"
+        backAction={{ onAction: () => router.push("/orders") }}
       >
         <Layout>
-          <Layout.Section variant="oneHalf">
+          <Layout.Section>
             <Card>
               <BlockStack gap="200">
-                <Text as="h2" variant="headingMd">
-                  Consulter
-                </Text>
-                <Text>
-                  Faire une petite consulte des Produits a l'API de GraphQL
-                  (Regardez la console)
+                <Text as="p" variant="headingMd">
+                  The following orders has been imported from Shopify using
+                  webhooks or updated manually.
                 </Text>
                 <InlineStack wrap={false} align="end">
-                  <Button
-                    variant="primary"
-                    onClick={async () => {
-                      const query = `
-                                query Products {
-                                    products(first: 5) {
-                                        edges {
-                                            node {
-                                                id
-                                                title
-                                                handle
-                                                featuredImage {
-                                                    url
-                                                }
-                                                priceRange {
-                                                    minVariantPrice {
-                                                        amount
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            `;
-
-                      const response = await fetch("/api/graphql", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ query }),
-                      });
-
-                      const data = await response.json();
-                      console.log(data);
-                    }}
-                  >
-                    Explore
-                  </Button>
+                  {isLoading ? (
+                    <Spinner accessibilityLabel="Loading" size="small" />
+                  ) : (
+                    <Button variant="primary" onClick={updateOrders}>
+                      Update
+                    </Button>
+                  )}
                 </InlineStack>
-              </BlockStack>
-            </Card>
-          </Layout.Section>
-          <Layout.Section variant="oneHalf">
-            <Card>
-              <BlockStack gap="200">
-                <Text as="h2" variant="headingMd">
-                  Ordres d'achats
-                </Text>
-                <Text>
-                  Faire une petite consulte des Produits a l'API de GraphQL
-                  (Regardez la console)
-                </Text>
-                <InlineStack wrap={false} align="end">
-                  <Button
-                    variant="primary"
-                    onClick={async () => {
-                      router.push("/orders/list");
-                    }}
+                {orders.length > 0 ? (
+                  <IndexTable
+                    itemCount={orders.length}
+                    headings={[
+                      { title: "Order Number" },
+                      { title: "Customer" },
+                      { title: "Total Price" },
+                    ]}
                   >
-                    Explore
-                  </Button>
-                </InlineStack>
+                    {rowMarkup}
+                  </IndexTable>
+                ) : (
+                  <Text as="p">There are no orders.</Text>
+                )}
               </BlockStack>
             </Card>
           </Layout.Section>
@@ -103,4 +110,4 @@ const DebugIndex = () => {
   );
 };
 
-export default DebugIndex;
+export default OrdersPage;

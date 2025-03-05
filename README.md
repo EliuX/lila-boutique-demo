@@ -29,13 +29,13 @@ yarn install
   Assurez-vous de créer la base de données avec `yarn pg:create` et de démarrer les services, par exemple : `brew services start postgresql`.
 
 - Générer le client Prisma (ORM) en fonction de votre schéma Prisma :
-  
+
 ```bash
 yarn prepare
 ```
-  
-  Puis poussez le schéma Prisma avec :
-  
+
+Puis poussez le schéma Prisma avec :
+
 ```bash
 yarn prisma:push
 ```
@@ -77,7 +77,7 @@ yarn dev
 - Installer l'application en ouvrant dans votre navigateur l'URL suivante :
 
 ```bash
-https://<storename>.myshopify.com/admin/oauth/install?client_id=<SHOPIFY_API_KEY>
+source .env; open https://$APP_HANDLE.myshopify.com/admin/oauth/install?client_id=$SHOPIFY_API_KEY
 ```
 
 Ou via la ligne de commande :
@@ -96,7 +96,7 @@ Après avoir installé cette application, vous êtes prêt à l'utiliser.
 
 2 - Allez dans le flux d'application "Lila Boutique Demo" et sélectionnez "Les ventes" > "Ordres d'achats".
 
-3 - Dans la liste d'achats (`/orders/list`), vous verrez celles déjà importées. Un webhook est déclenché après la création d'une commande (comme à l'étape 1). Vous pouvez également "Mettre à jour" ces entrées manuellement, ce qui les importera de Shopify vers votre base de données.
+3 - Dans la liste d'achats (`/orders`), vous verrez celles déjà importées. Un webhook est déclenché après la création d'une commande (comme à l'étape 1). Vous pouvez également "Mettre à jour" ces entrées manuellement, ce qui les importera de Shopify vers votre base de données.
 
 ## Notes
 
@@ -106,4 +106,3 @@ Après avoir installé cette application, vous êtes prêt à l'utiliser.
 - Guide de migration de l'installation gérée par Shopify disponible [ici](/docs/migration/oauth-to-managed-installation.md).
 - Guide de mise à jour de l'abstraction Client Provider disponible [ici](/docs/migration/clientProvider.md).
 - Guide de migration de GraphQL vers les webhooks gérés disponible [ici](/docs/migration/managed-webhooks.md).
-
