@@ -3,13 +3,13 @@
 name = "Lila Boutique demo"
 handle = "lila-boutique-demo"
 client_id = "a35a5c3baa03afd45d62a925e09475aa"
-application_url = "https://7750-2607-fa49-d73c-4100-00-661c.ngrok-free.app"
+application_url = "https://4d1c-2607-fa49-d73c-4100-00-a8ae.ngrok-free.app"
 embedded = true
 extension_directories = [ "../extension/extensions/**" ]
 
 [auth]
 redirect_urls = [
-  "https://7750-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/"
+  "https://4d1c-2607-fa49-d73c-4100-00-a8ae.ngrok-free.app/api/"
 ]
 
 [access_scopes]
@@ -21,16 +21,16 @@ api_version = "2024-10"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
-  uri = "https://7750-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/webhooks/app_uninstalled"
+  uri = "https://4d1c-2607-fa49-d73c-4100-00-a8ae.ngrok-free.app/api/webhooks/app_uninstalled"
 
   [[webhooks.subscriptions]]
   topics = [ "orders/create" ]
-  uri = "https://7750-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/webhooks/orders_create"
+  uri = "https://4d1c-2607-fa49-d73c-4100-00-a8ae.ngrok-free.app/api/webhooks/orders_create"
 
   [webhooks.privacy_compliance]
-  customer_data_request_url = "https://7750-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/gdpr/customers_data_request"
-  customer_deletion_url = "https://7750-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/gdpr/customers_redact"
-  shop_deletion_url = "https://7750-2607-fa49-d73c-4100-00-661c.ngrok-free.app/api/gdpr/shop_redact"
+  customer_data_request_url = "https://4d1c-2607-fa49-d73c-4100-00-a8ae.ngrok-free.app/api/gdpr/customers_data_request"
+  customer_deletion_url = "https://4d1c-2607-fa49-d73c-4100-00-a8ae.ngrok-free.app/api/gdpr/customers_redact"
+  shop_deletion_url = "https://4d1c-2607-fa49-d73c-4100-00-a8ae.ngrok-free.app/api/gdpr/shop_redact"
 
 [pos]
 embedded = false

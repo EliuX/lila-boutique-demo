@@ -80,12 +80,6 @@ yarn dev
 source .env; open https://$APP_HANDLE.myshopify.com/admin/oauth/install?client_id=$SHOPIFY_API_KEY
 ```
 
-Ou via la ligne de commande :
-
-```bash
-source .env; open https://$APP_HANDLE.myshopify.com/admin/oauth/install?client_id=$SHOPIFY_API_KEY
-```
-
 Après avoir installé cette application, vous êtes prêt à l'utiliser.
 
 ## Comment afficher les achats dans le système

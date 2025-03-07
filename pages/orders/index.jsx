@@ -93,7 +93,7 @@ const OrdersPage = () => {
           </Text>
         </IndexTable.Cell>
       </IndexTable.Row>
-    )
+    ),
   );
 
   return (

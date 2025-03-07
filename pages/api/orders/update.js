@@ -51,10 +51,10 @@ const handler = async (req, res) => {
     if (orders.length > 0) {
       console.log("New orders to be saved locally: ", orders);
       return await Promise.all(orders.map(createOrder))
-          .then((orders)=> res.status(200).send(orders))
-          .catch(() => { 
-            return res.status(409).send({ text: "Elements already imported" });
-          });
+        .then((orders) => res.status(200).send(orders))
+        .catch(() => {
+          return res.status(409).send({ text: "Elements already imported" });
+        });
     }
 
     return res.status(200).send(orders);

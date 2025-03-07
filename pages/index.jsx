@@ -146,7 +146,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://shopify.dev/docs/api/app-bridge-library/reference",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
@@ -173,7 +173,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://github.com/kinngh/lila-boutique-demo/issues?q=is%3Aissue",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
@@ -186,7 +186,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://github.com/kinngh/lila-boutique-demo",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
@@ -214,7 +214,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://kinngh.gumroad.com/l/how-to-make-shopify-apps?utm_source=boilerplate&utm_medium=nextjs",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
@@ -243,7 +243,7 @@ const HomePage = () => {
                     onClick={() => {
                       open(
                         "https://kinngh.gumroad.com/l/how-to-make-shopify-apps?utm_source=boilerplate&utm_medium=nextjs",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
